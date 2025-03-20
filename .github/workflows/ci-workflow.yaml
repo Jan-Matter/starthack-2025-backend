@@ -24,7 +24,6 @@ jobs:
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
 
-jobs:
   build-prod:
     runs-on: ubuntu-latest
     environment: prod
