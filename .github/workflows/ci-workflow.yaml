@@ -96,5 +96,3 @@ jobs:
         run: |
           chmod +x ./deployment/pipelines/k8s_deploy.sh
           ./deployment/pipelines/k8s_deploy.sh
-        with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
