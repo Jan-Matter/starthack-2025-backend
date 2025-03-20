@@ -10,6 +10,8 @@ import os
 
 
 from api.routes.liveness import Liveness
+from api.routes.fininfo import Fininfo
+
 from api.constants import APIEndpoints, LoggingMessages, Env
 from clients.s3_client import S3FileStore
     
@@ -42,6 +44,13 @@ def create_app(
     logger.info("Adding liveness routes")
     liveness_route.add_api_routes(router)
     logger.info("Added liveness routes")
+    
+    
+    fininfo_route = Fininfo()
+    logger.info("Adding fininfo routes")
+    fininfo_route.add_api_routes(router)
+    logger.info("Added fininfo routes")
+    
     
     app.include_router(router)
     

@@ -50,7 +50,7 @@ class IDChatClient:
     async def company_data_search(self, query_str):
         """Get information about one or more companies."""
         await self.ensure_session()
-        url = f"{self.base_url}/companydatasearch?query={quote(query_str)}"
+        url = f"{self.base_url}/companydatasearch?query={quote("company:{query_str}")}"
         async with self.session.post(url) as response:
             return await response.json()
     
@@ -82,7 +82,6 @@ async def main():
         # Make multiple calls and gather them
         tesla_task = client.query("Tesla between 2020 and 2022")
         apple_task = client.query("Apple between 2020 and 2022")
-        alphabet_task = client.query("Alphabet between 2020 and 2022")
 
         # Await all results
         
@@ -90,8 +89,6 @@ async def main():
         print(await tesla_task)
         print("\nApple data:")
         print(await apple_task)
-        print("\Google data:")
-        print(await alphabet_task)
 
 
 if __name__ == "__main__":
