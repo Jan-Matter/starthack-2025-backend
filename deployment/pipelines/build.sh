@@ -13,9 +13,6 @@ case $CURRENT_BRANCH in
     exit 0;
 esac
 
-export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api"
-export TES_IMAGE_TAG="$TES_IMAGE:$(echo "$RUN_ID" | tr -d '{}')"
+export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$RUN_ID"
 
-docker tag "$TES_IMAGE_TAG" "$TES_IMAGE:$env"
-docker push "$TES_IMAGE_TAG"
-docker push "$TES_IMAGE:$env"
+docker push $TES_IMAGE
