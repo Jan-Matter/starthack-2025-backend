@@ -35,4 +35,5 @@ COPY clients /starthack/clients
 COPY controllers /starthack/controllers
 COPY shared /starthack/shared
 
+
 CMD ["micromamba", "run", "-n", "starthack", "python", "./api/main.py"]
