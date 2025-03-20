@@ -2,8 +2,6 @@
 
 sudo snap install aws-cli --classic
 
-echo aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 046776365295.dkr.ecr.eu-central-1.amazonaws.com
-
 docker build -t "$TES_IMAGE_TAG" . 
 
 case $CURRENT_BRANCH in
