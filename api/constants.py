@@ -9,6 +9,7 @@ class APIEndpoints(Enum):
     DOCS = "/api/v1/docs"
     REDOC = "/api/v1/redoc"
     OPENAPI_URL = "/api/v1/openapi.json"
+    WEBSOCKET_AUDIO_RECV = "/api/v1/ws/audio_recv"
     
 
 class Env(Enum):
@@ -18,5 +19,7 @@ class Env(Enum):
 
 class LoggingMessages(Enum):
     API_READY = "API is ready"
+    ERROR_RECEIVING_AUDIO_DATA = "Error receiving audio data: "
+    SOCKET_LISTENING = "Socket listening on port "
 
 

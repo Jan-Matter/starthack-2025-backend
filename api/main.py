@@ -10,6 +10,7 @@ import os
 
 
 from api.routes.liveness import Liveness
+from api.routes.audio_recv import AudioRecv
 from api.constants import APIEndpoints, LoggingMessages, Env
 from clients.s3_client import S3FileStore
     
@@ -25,6 +26,8 @@ def create_app(
         redoc_url=APIEndpoints.REDOC.value,
         openapi_url=APIEndpoints.OPENAPI_URL.value
     )
+
+    transcribiton_buffer = {}
     
     #cors settings
     origins = ["*"]
@@ -42,6 +45,18 @@ def create_app(
     logger.info("Adding liveness routes")
     liveness_route.add_api_routes(router)
     logger.info("Added liveness routes")
+
+    audio_recv_route = AudioRecv(
+        transcriber=None,
+        logger=logger,
+        transcription_buffer=transcribiton_buffer,
+        config={
+            "buffer_time": 5
+        }
+    )
+    logger.info("Adding audio_recv routes")
+    audio_recv_route.add_api_routes(router)
+    logger.info("Added audio_recv routes")
     
     app.include_router(router)
     
