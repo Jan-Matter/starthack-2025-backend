@@ -69,7 +69,7 @@ jobs:
         with:
           repository: Jan-Matter/starthack-2025-deployment
           ref: 'release'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.G_TOKEN }}
 
       - name: Run k8s_deploy.sh
         run: |
