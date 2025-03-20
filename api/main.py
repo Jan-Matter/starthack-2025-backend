@@ -55,7 +55,7 @@ def create_app(
         }
     )
     logger.info("Adding audio_recv routes")
-    audio_recv_route.add_api_routes(router)
+    audio_recv_route.add_socket_port(8001)
     logger.info("Added audio_recv routes")
     
     app.include_router(router)

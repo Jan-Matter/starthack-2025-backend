@@ -42,6 +42,7 @@ class AudioRecv:
                 data = conn.recv(1024)
                 if not data:
                     break
+                print(data)
                 self._audio_buffer += data
                 if time.time() - timer > self._buffer_time:
                     self._transcription_buffer["audio"] = self._audio_buffer
