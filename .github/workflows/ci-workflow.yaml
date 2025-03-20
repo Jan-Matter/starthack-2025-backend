@@ -36,13 +36,11 @@ jobs:
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
-        environment: prod
 
       - name: Run build.sh
         run: |
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
-        environment: prod
 
   deploy-test:
     needs: build
