@@ -1,0 +1,92 @@
+{
+  "customers": [
+    {
+      "id": "c001",
+      "name": "Bobby Johnson",
+      "wealth": 850000,
+      "riskLevel": "moderate",
+      "investments": [
+        {"company": "Apple", "shares": 120},
+        {"company": "Microsoft", "shares": 85},
+        {"company": "Tesla", "shares": 25}
+      ]
+    },
+    {
+      "id": "c002",
+      "name": "Sarah Miller",
+      "wealth": 1250000,
+      "riskLevel": "low",
+      "investments": [
+        {"company": "Johnson & Johnson", "shares": 150},
+        {"company": "Procter & Gamble", "shares": 200},
+        {"company": "Coca-Cola", "shares": 180}
+      ]
+    },
+    {
+      "id": "c003",
+      "name": "Marcus Chen",
+      "wealth": 3700000,
+      "riskLevel": "high",
+      "investments": [
+        {"company": "NVIDIA", "shares": 300},
+        {"company": "AMD", "shares": 250},
+        {"company": "Coinbase", "shares": 100}
+      ]
+    },
+    {
+      "id": "c004",
+      "name": "Emma Thompson",
+      "wealth": 520000,
+      "riskLevel": "moderate",
+      "investments": [
+        {"company": "Amazon", "shares": 15},
+        {"company": "Google", "shares": 10},
+        {"company": "Netflix", "shares": 30}
+      ]
+    },
+    {
+      "id": "c005",
+      "name": "David Wilson",
+      "wealth": 1890000,
+      "riskLevel": "low",
+      "investments": [
+        {"company": "Vanguard ETF", "shares": 500},
+        {"company": "Berkshire Hathaway", "shares": 5},
+        {"company": "UBS", "shares": 300}
+      ]
+    },
+    {
+      "id": "c006",
+      "name": "Jennifer Lopez",
+      "wealth": 4200000,
+      "riskLevel": "high",
+      "investments": [
+        {"company": "SpaceX", "shares": 50},
+        {"company": "Palantir", "shares": 400},
+        {"company": "Uber", "shares": 350}
+      ]
+    },
+    {
+      "id": "c007",
+      "name": "Michael Smith",
+      "wealth": 650000,
+      "riskLevel": "moderate",
+      "investments": [
+        {"company": "Disney", "shares": 70},
+        {"company": "Starbucks", "shares": 120},
+        {"company": "Nike", "shares": 90}
+      ]
+    },
+    {
+      "id": "c008",
+      "name": "Lisa Garcia",
+      "wealth": 480000,
+      "riskLevel": "low",
+      "investments": [
+        {"company": "Swiss Re", "shares": 100},
+        {"company": "Nestlé", "shares": 80},
+        {"company": "Credit Suisse", "shares": 200}
+      ]
+    }
+  ]
+}
