@@ -1,14 +1,14 @@
 #!/bin/bash
 
-export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$RUN_ID"
+export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$COMMIT_SHA"
 
 docker build -t "$TES_IMAGE" . 
 
-case $CURRENT_BRANCH in
+case $GITHUB_REF_NAME in
   release)
     env="test"
     ;;
-  master)
+  main)
     env="prod"
     ;;
   *) echo "This image won't be pushed" >&2
