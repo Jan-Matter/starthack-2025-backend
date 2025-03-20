@@ -14,14 +14,32 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run set-env.sh
+        if ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
+        environment: test
 
       - name: Run build.sh
+        if ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
+        environment: test
+      
+      - name: Run set-env.sh
+        if ${{ github.ref_name == 'main' }} # Runs for main branch only
+        run: |
+          chmod +x ./deployment/pipelines/set-env.sh
+          ./deployment/pipelines/set-env.sh
+        environment: prod
+
+      - name: Run build.sh
+        if ${{ github.ref_name == 'main' }} # Runs for main branch only
+        run: |
+          chmod +x ./deployment/pipelines/build.sh
+          ./deployment/pipelines/build.sh
+        environment: prod
 
   deploy:
     needs: build
@@ -32,11 +50,29 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Run set-env.sh
+        if ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
+        environment: test
 
       - name: Run deploy.sh
+        if ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/deploy.sh
           ./deployment/pipelines/deploy.sh
+        environment: test
+      
+      - name: Run set-env.sh
+        if ${{ github.ref_name == 'main' }} # Runs for main branch only
+        run: |
+          chmod +x ./deployment/pipelines/set-env.sh
+          ./deployment/pipelines/set-env.sh
+        environment: prod
+      
+      - name: Run deploy.sh
+        if ${{ github.ref_name == 'main' }} # Runs for main branch only
+        run: |
+          chmod +x ./deployment/pipelines/deploy.sh
+          ./deployment/pipelines/deploy.sh
+        environment: prod
