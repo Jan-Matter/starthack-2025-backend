@@ -76,9 +76,6 @@ jobs:
           git config --global user.email "jan.matter@outlook.com"
           git config --global user.name "Jan Matter"
 
-          cd starthack-2025-deployment
-          git checkout $GITHUB_REF_NAME
-
           echo "Updating image tag for deployment $GITHUB_SHA"
           echo "Environment: $env"
 
