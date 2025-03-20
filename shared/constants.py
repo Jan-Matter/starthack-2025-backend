@@ -1,0 +1,1 @@
+S3_BUCKET_NAME = 'starthack-2025'
