@@ -17,6 +17,9 @@ git clone https://github.com/Jan-Matter/starthack-2025-deployment.git
 cd starthack-2025-deployment
 git checkout $GITHUB_REF_NAME
 
+echo "Updating image tag for deployment $GITHUB_SHA"
+echo "Environment: $env"
+
 cd helmcharts/starthack-backend-chart
 sed -i "s/^.*image:.*$/image: 046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$GITHUB_SHA/" values.yaml
 git add values.yaml
