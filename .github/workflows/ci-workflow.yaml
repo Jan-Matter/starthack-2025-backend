@@ -67,7 +67,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          repository: Jan-Matter/starthack-2025-deployment
+          ref: 'release'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run k8s_deploy.sh
         run: |
@@ -86,7 +88,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          repository: Jan-Matter/starthack-2025-deployment
+          ref: 'main'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run k8s_deploy.sh
         run: |
