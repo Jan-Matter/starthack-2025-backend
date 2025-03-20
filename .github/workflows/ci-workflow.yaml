@@ -43,7 +43,7 @@ jobs:
           ./deployment/pipelines/build.sh
 
   deploy-test:
-    needs: build
+    needs: build-test
     runs-on: ubuntu-latest
     environment: test
 
@@ -62,7 +62,7 @@ jobs:
           ./deployment/pipelines/deploy.sh
       
   deploy-prod:
-    needs: build
+    needs: build-prod
     runs-on: ubuntu-latest
     environment: prod
 
