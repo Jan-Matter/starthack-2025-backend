@@ -97,9 +97,18 @@ jobs:
         with:
           repository: Jan-Matter/starthack-2025-deployment
           ref: 'main'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.G_TOKEN }}
 
       - name: Run k8s_deploy.sh
         run: |
-          chmod +x ./deployment/pipelines/k8s_deploy.sh
-          ./deployment/pipelines/k8s_deploy.sh
+          git config --global user.email "jan.matter@outlook.com"
+          git config --global user.name "Jan Matter"
+
+          echo "Updating image tag for deployment $GITHUB_SHA"
+          echo "Environment: $env"
+
+          cd helmcharts/starthack-backend-chart
+          sed -i "s/^.*image:.*$/image: 046776365295.dkr.ecr.eu-central-1.amazonaws.com\/starthack-$env\/api:$GITHUB_SHA/" values.yaml
+          git add values.yaml
+          git commit -m "Update image tag for deployment $GITHUB_SHA"
+          git push origin $GITHUB_REF_NAME
