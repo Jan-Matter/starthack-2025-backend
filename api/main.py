@@ -7,6 +7,7 @@ import argparse
 import watchtower
 import boto3
 import os
+from controllers.service_initializer import ServiceInitializer
 
 
 from api.routes.liveness import Liveness
@@ -19,7 +20,8 @@ from clients.s3_client import S3FileStore
 def create_app(
     logger: logging.Logger,
     filestore: S3FileStore,
-    env: str
+    env: str,
+    customer_id: str
     ) -> FastAPI:
     
     app = FastAPI(
@@ -54,7 +56,20 @@ def create_app(
     
     app.include_router(router)
     
+    
+    service_initializer = ServiceInitializer()
+    # Set the customer ID before initializing
+    service_initializer.set_customer_id(customer_id)
+
+    @app.on_event("startup")
+    async def startup_event():
+        logger.info("Running startup tasks...")
+        # Only pass logger to initialize
+        await service_initializer.initialize(logger)
+        logger.info("Startup tasks completed")
+    
     logger.info(LoggingMessages.API_READY.value)
+    
     
     return app
 
@@ -62,6 +77,9 @@ def create_app(
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Start the API server')
+    # Add customer_id argument
+    parser.add_argument('--customer_id', type=str, default='c007', 
+                      help='Customer ID to process (default: c007)')
     args = parser.parse_args()
 
     ENV = os.getenv('ENV', 'test')
@@ -95,7 +113,8 @@ if __name__ == '__main__':
         app = create_app(
             logger=logger,
             filestore=filestore,
-            env=ENV
+            env=ENV,
+            customer_id=args.customer_id  # Pass the customer_id
             )
     except Exception as e:
         logger.error("An error occurred during startup")

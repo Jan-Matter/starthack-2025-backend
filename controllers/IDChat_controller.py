@@ -82,31 +82,62 @@ class IDChatController:
                 "status": "error"
             }
     
-    async def compare_companies(self, companies: List[str], metric: str = None) -> Dict[str, Any]:
-        """Compare multiple companies based on optional metrics."""
+    async def compare_companies(self, companies: List[str], metric: str = None, start_date: str = None, end_date: str = None) -> Dict[str, Any]:
         await self.initialize()
         
-        tasks = []
-        for company in companies:
-            # Get company data
-            tasks.append(self.client.company_data_search(company))
+        # Set default date range if not provided
+        if not start_date:
+            start_date = (datetime.now() - timedelta(days=365)).strftime("%d.%m.%Y")
+        
+        if not end_date:
+            end_date = datetime.now().strftime("%d.%m.%Y")
+        
+        # Create a single list of all tasks
+        all_tasks = []
+        company_indices = {}
+        
+        for i, company in enumerate(companies):
+            # Store index mapping for later use
+            company_indices[company] = i
+            
+            # Add all tasks for this company to the combined list
+            all_tasks.append(self.client.company_data_search(company))  # Task type 0
+            all_tasks.append(self.client.summary(company))              # Task type 1
+            all_tasks.append(self.client.ohlcv(company, first=start_date, last=end_date))  # Task type 2
         
         try:
-            results = await asyncio.gather(*tasks)
+            # Execute ALL tasks concurrently in a single gather
+            all_results = await asyncio.gather(*all_tasks)
             
+            # Process results - separate them back into categories
             processed_results = {}
             for i, company in enumerate(companies):
-                processed_results[company] = results[i]
+                # Calculate position in results list
+                base_idx = i * 3
+                company_data_result = all_results[base_idx]      # Type 0
+                summary_result = all_results[base_idx + 1]       # Type 1
+                stock_result = all_results[base_idx + 2]         # Type 2
+                
+                # Parse stock data if available
+                stock_data = self.client.parse_table_data(stock_result)
+                
+                processed_results[company] = {
+                    "company_data": company_data_result,
+                    "summary": summary_result,
+                    "stock_data": stock_result,
+                    "stock_table": stock_data.to_dict() if isinstance(stock_data, pd.DataFrame) else None,
+                }
             
             # If a specific metric was requested, extract and compare it
             compared_data = {}
             if metric:
                 for company, data in processed_results.items():
-                    # Extract the metric from data (this would need customization based on response structure)
-                    compared_data[company] = self._extract_metric(data, metric)
+                    # Extract the metric from company data
+                    compared_data[company] = self._extract_metric(data["company_data"], metric)
             
             return {
                 "companies": companies,
+                "period": f"{start_date} to {end_date}",
                 "metric": metric,
                 "data": processed_results,
                 "comparison": compared_data if metric else None,
@@ -116,6 +147,7 @@ class IDChatController:
         except Exception as e:
             return {
                 "companies": companies,
+                "period": f"{start_date} to {end_date}",
                 "metric": metric,
                 "error": str(e),
                 "timestamp": datetime.now().isoformat(),
@@ -230,6 +262,7 @@ async def example_usage():
         
     finally:
         await controller.close()
+        
 
 if __name__ == "__main__":
     asyncio.run(example_usage())
