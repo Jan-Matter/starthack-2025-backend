@@ -10,7 +10,6 @@ Run
 - activate conda env from environment.yaml `conda env create -f environment.yml`
 - install repository `python -m pip install -e .`
 
-
 ### Build Docker Image and Push to Docker Repository
 - `docker build -t 046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-test/api:<version> .`
 - if not already install aws cli tool
