@@ -13,7 +13,7 @@ esac
 git config --global user.email "jan.matter@outlook.com"
 git config --global user.name "Jan Matter"
 
-git clone https://github.com/Jan-Matter/starthack-2025-deployment.git
+git clone git@github.com:Jan-Matter/starthack-2025-deployment.git
 cd starthack-2025-deployment
 git checkout $GITHUB_REF_NAME
 
