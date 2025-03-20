@@ -18,7 +18,7 @@ cd starthack-2025-deployment
 git checkout $GITHUB_REF_NAME
 
 cd helmcharts/starthack-backend-chart
-sed -i "s/^.*image:.*$/image: "046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$GITHUB_SHA/" values.yaml
+sed -i "s/^.*image:.*$/image: 046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$GITHUB_SHA/" values.yaml
 git add values.yaml
 git commit -m "Update image tag for deployment $GITHUB_SHA"
 git push origin $GITHUB_REF_NAME
