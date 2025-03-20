@@ -33,5 +33,5 @@ export DOCKER_HOST=tcp://localhost:2375
 export ENVIRONMENT_NAME=$env
 echo "$ENVIRONMENT_NAME environment set"
 
-export TES_IMAGE="$DOCKER_REGISTRY/starthack-$env/api"
+export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api"
 export TES_IMAGE_TAG="$TES_IMAGE:$(echo "$RUN_ID" | tr -d '{}')"
