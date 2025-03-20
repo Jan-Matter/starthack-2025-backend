@@ -1,0 +1,42 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - release
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run set-env.sh
+        run: |
+          chmod +x ./deployment/pipelines/set-env.sh
+          ./deployment/pipelines/set-env.sh
+
+      - name: Run build.sh
+        run: |
+          chmod +x ./deployment/pipelines/build.sh
+          ./deployment/pipelines/build.sh
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Run set-env.sh
+        run: |
+          chmod +x ./deployment/pipelines/set-env.sh
+          ./deployment/pipelines/set-env.sh
+
+      - name: Run deploy.sh
+        run: |
+          chmod +x ./deployment/pipelines/deploy.sh
+          ./deployment/pipelines/deploy.sh
