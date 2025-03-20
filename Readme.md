@@ -1,5 +1,6 @@
 # This repo implements the Backend for the Start Hack 2025 Project
 
+
 ### Setup of Repo
 - Add the env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY of the AWS service account to your computer. On linux one can add 
 - `export AWS_ACCESS_KEY_ID=<your_access_key_id>`
