@@ -6,73 +6,80 @@ on:
       - release
       - main
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
+    environment: test
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Run set-env.sh
-        if: ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
-        environment: test
 
       - name: Run build.sh
-        if: ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
-        environment: test
-      
+
+jobs:
+  build-prod:
+    runs-on: ubuntu-latest
+    environment: prod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+    steps:
       - name: Run set-env.sh
-        if: ${{ github.ref_name == 'main' }} # Runs for main branch only
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
         environment: prod
 
       - name: Run build.sh
-        if: ${{ github.ref_name == 'main' }} # Runs for main branch only
         run: |
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
         environment: prod
 
-  deploy:
+  deploy-test:
     needs: build
     runs-on: ubuntu-latest
+    environment: test
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       
       - name: Run set-env.sh
-        if: ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
-        environment: test
 
       - name: Run deploy.sh
-        if: ${{ github.ref_name != 'main' }} # Runs for non-main branches
         run: |
           chmod +x ./deployment/pipelines/deploy.sh
           ./deployment/pipelines/deploy.sh
-        environment: test
       
+  deploy-prod:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: prod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Run set-env.sh
-        if: ${{ github.ref_name == 'main' }} # Runs for main branch only
         run: |
           chmod +x ./deployment/pipelines/set-env.sh
           ./deployment/pipelines/set-env.sh
-        environment: prod
       
       - name: Run deploy.sh
-        if: ${{ github.ref_name == 'main' }} # Runs for main branch only
         run: |
           chmod +x ./deployment/pipelines/deploy.sh
           ./deployment/pipelines/deploy.sh
-        environment: prod
