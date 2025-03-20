@@ -15,3 +15,4 @@ Run
 - `docker build -t 046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-test/api:<version> .`
 - if not already install aws cli tool
 - `aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 046776365295.dkr.ecr.eu-central-1.amazonaws.com`
+- `docker push 046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-test/api:<version>`

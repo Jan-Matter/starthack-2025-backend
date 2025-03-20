@@ -14,4 +14,6 @@ class Liveness:
         router.add_api_route(APIEndpoints.LIVENESS.value, self.get, methods=['GET'])
     
     async def get(self, request: Request) -> Dict:
-        return LivenessResponse(status="healthy")
+        return {
+            'status': 'healthy'
+        }
