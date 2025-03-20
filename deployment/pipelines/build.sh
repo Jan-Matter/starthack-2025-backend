@@ -1,6 +1,8 @@
 #!/bin/bash
 
-docker build -t "$TES_IMAGE_TAG" . 
+export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$RUN_ID"
+
+docker build -t "$TES_IMAGE" . 
 
 case $CURRENT_BRANCH in
   release)
@@ -13,6 +15,5 @@ case $CURRENT_BRANCH in
     exit 0;
 esac
 
-export TES_IMAGE="046776365295.dkr.ecr.eu-central-1.amazonaws.com/starthack-$env/api:$RUN_ID"
 
 docker push $TES_IMAGE
