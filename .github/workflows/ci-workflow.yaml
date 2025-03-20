@@ -25,15 +25,9 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Run set-env.sh
-        run: |
-          chmod +x ./deployment/pipelines/set-env.sh
-          ./deployment/pipelines/set-env.sh
 
       - name: Run build.sh
         run: |
-          chmod +x ./deployment/pipelines/set-env.sh
-          ./deployment/pipelines/set-env.sh
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
 
@@ -58,8 +52,6 @@ jobs:
 
       - name: Run build.sh
         run: |
-          chmod +x ./deployment/pipelines/set-env.sh
-          ./deployment/pipelines/set-env.sh
           chmod +x ./deployment/pipelines/build.sh
           ./deployment/pipelines/build.sh
 
@@ -75,8 +67,6 @@ jobs:
 
       - name: Run deploy.sh
         run: |
-          chmod +x ./deployment/pipelines/set-env.sh
-          ./deployment/pipelines/set-env.sh
           chmod +x ./deployment/pipelines/deploy.sh
           ./deployment/pipelines/deploy.sh
       
@@ -92,7 +82,5 @@ jobs:
 
       - name: Run deploy.sh
         run: |
-          chmod +x ./deployment/pipelines/set-env.sh
-          ./deployment/pipelines/set-env.sh
           chmod +x ./deployment/pipelines/deploy.sh
           ./deployment/pipelines/deploy.sh
