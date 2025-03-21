@@ -23,7 +23,7 @@ FROM mambaorg/micromamba:2.0.5-debian12-slim AS runtime
 USER root
 RUN groupadd -g 1000 starthack-group && useradd -m -u 1000 -g 1000 starthack
 
-USER starthack
+USER root
 WORKDIR /starthack
 ENV CONDA_ENV_PATH="/opt/conda/envs/starthack"
 ENV PATH="$CONDA_ENV_PATH/bin:$PATH"
@@ -34,6 +34,7 @@ COPY api /starthack/api
 COPY clients /starthack/clients
 COPY controllers /starthack/controllers
 COPY shared /starthack/shared
+COPY data /starthack/data
 
 
 CMD ["micromamba", "run", "-n", "starthack", "python", "./api/main.py"]
