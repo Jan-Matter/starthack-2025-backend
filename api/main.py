@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import logging
@@ -14,7 +14,13 @@ from api.routes.fininfo import Fininfo
 
 from api.constants import APIEndpoints, LoggingMessages, Env
 from clients.s3_client import S3FileStore
-    
+
+async def background_function():
+    logger.info("Running startup tasks...")
+    # Only pass logger to initialize
+    service_initializer = ServiceInitializer()
+    await service_initializer.initialize(logger)
+    logger.info("Startup tasks completed")
 
 def create_app(
     logger: logging.Logger,
@@ -54,18 +60,11 @@ def create_app(
     
     
     app.include_router(router)
-    
-    
-    service_initializer = ServiceInitializer()
-    # Set the customer ID before initializing
-    service_initializer.set_customer_id(customer_id)
 
-    @app.on_event("startup")
-    async def startup_event():
-        logger.info("Running startup tasks...")
-        # Only pass logger to initialize
-        await service_initializer.initialize(logger)
-        logger.info("Startup tasks completed")
+
+    background_task = BackgroundTasks()
+    background_task.add_task(background_function)
+    app.add_event_handler("startup", background_task)        
     
     logger.info(LoggingMessages.API_READY.value)
     
