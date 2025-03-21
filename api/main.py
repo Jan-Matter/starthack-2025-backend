@@ -9,7 +9,6 @@ import boto3
 import os
 from controllers.service_initializer import ServiceInitializer
 
-
 from api.routes.liveness import Liveness
 from api.routes.fininfo import Fininfo
 
